@@ -23,7 +23,26 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       templateUrl: 'templates/tabs.html'
     })
 
-    // the pet tab has its own child nav-view and history
+    .state('tab.user-login', {
+      url: '/login',
+      views: {
+        'login-tab': {
+          templateUrl: 'templates/user-login.html',
+          controller: 'UserLoginCtrl'
+        }
+      }
+    })
+
+    .state('tab.sign-up', {
+      url: '/signup',
+      views: {
+        'signup-tab': {
+          templateUrl: 'templates/sign-up.html',
+          controller: 'UserLoginCtrl'
+        }
+      }
+    })
+
     .state('tab.user-index', {
       url: '/user',
       views: {
@@ -64,7 +83,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/user');
+  $urlRouterProvider.otherwise('/tab/login');
 
 });
 

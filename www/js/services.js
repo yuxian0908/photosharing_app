@@ -14,16 +14,15 @@ angular.module('starter.services', [])
       { id: 3, title: 'Sharks', description: 'An advanced pet. Needs millions of gallons of salt water. Will happily eat you.' }
     ];
 
+    var user={};
+
     return {
+      getuser: function(){
+        return user;
+      },
       login: function(users){
-        $http.post(' https://yuxian-photosharing.herokuapp.com/api/signin',users)
-        .then(function (res){
-          console.log(res);
-          return users;
-        },function (error){
-          console.log('wrong');
-          return error;
-        });
+        user = users;
+        return user;
       },
       all: function() {
         return pets;
