@@ -26,7 +26,7 @@ angular.module('starter.controllers', ['ionic'])
               if (!$scope.data.username||!$scope.data.password) {
                 // 不允许用户关闭，除非输入 wifi 密码
                 e.preventDefault();
-              } else {
+              } else {       
                 return $scope.data;
               }
             }
@@ -47,7 +47,7 @@ angular.module('starter.controllers', ['ionic'])
             $scope.users.username = users.username;
             var nowUser = loginService.login($scope.users); //將user存成全域物件
             window.location.assign('#/tab/user');
-            alert('登入成功');
+            alert('登入成功');         
           },function (error){
             console.log('wrong');
             alert('帳號或密碼錯誤');
@@ -94,6 +94,14 @@ angular.module('starter.controllers', ['ionic'])
                 !$scope.newuser.password) {
                 e.preventDefault();
               } else {
+                $http.post('https://yuxian-photosharing.herokuapp.com/api/signup', $scope.newuser).then(function (success){
+                  alert('註冊成功');
+                  window.location.assign('#/tab/signin');
+                },function (err){
+                  console.log('wrong');
+                  alert('註冊失敗(已有此使用者)');
+                  location.reload();
+                });
                 return $scope.newuser;
               }
             }
@@ -102,13 +110,7 @@ angular.module('starter.controllers', ['ionic'])
       });
       myPopup.then(function(newuser) {
         console.log('Tapped!', newuser);
-        
-        $http.post('https://yuxian-photosharing.herokuapp.com/api/signup',newuser).then(function (success){
-          alert('註冊成功');
-          window.location.assign('#/tab/signin');
-        },function (error){
-          $scope.error = errorResponse.data.message;
-        });
+
       });
     };
 
