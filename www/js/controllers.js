@@ -39,22 +39,30 @@ angular.module('starter.controllers', ['ionic'])
         // 登入 API
         $http.post(' https://yuxian-photosharing.herokuapp.com/api/getuser',users)
         .then(function (res){
-          $scope.users.id = res.data[0].id;
-
-          // 取得userId API
-          $http.post(' https://yuxian-photosharing.herokuapp.com/api/signin',users)
-          .then(function (res){
-            $scope.users.username = users.username;
-            var nowUser = loginService.login($scope.users); //將user存成全域物件
-            window.location.assign('#/tab/user');
-            alert('登入成功');         
-          },function (error){
+          console.log(res);
+          if(res.data.length===0){
             console.log('wrong');
             alert('帳號或密碼錯誤');
             location.reload();
-          });
-        },function (error){
+          }else{
+            $scope.users.id = res.data[0].id;
+            // 取得userId API
+            $http.post(' https://yuxian-photosharing.herokuapp.com/api/signin',users)
+            .then(function (response){
+              $scope.users.username = users.username;
+              var nowUser = loginService.login($scope.users); //將user存成全域物件
+              window.location.assign('#/tab/user');
+              alert('登入成功');         
+            },function (err){
+              console.log('wrong');
+              alert('帳號或密碼錯誤');
+              location.reload();
+            });
+          }
+        },function (err){
           console.log('wrong');
+          alert('帳號或密碼錯誤');
+          location.reload();
         });
       });
     };
@@ -62,11 +70,11 @@ angular.module('starter.controllers', ['ionic'])
     // 註冊
     $scope.usersignup = function(){
       $scope.newuser = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        username: this.username,
-        password: this.password,
+        firstname: "",
+        lastname: "",
+        email: "",
+        username: "",
+        password: "",
         role:["user"]
       }
       // 登入彈出式視窗
