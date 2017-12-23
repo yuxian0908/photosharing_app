@@ -47,37 +47,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/user',
       views: {
         'user-tab': {
-          templateUrl: 'templates/user-index.html',
+          templateUrl: 'templates/User-index.html',
           controller: 'UserLoginCtrl'
-        }
-      }
-    })
-
-    .state('tab.pet-detail', {
-      url: '/pet/:petId',
-      views: {
-        'pets-tab': {
-          templateUrl: 'templates/pet-detail.html',
-          controller: 'PetDetailCtrl'
-        }
-      }
-    })
-
-    .state('tab.adopt', {
-      url: '/adopt',
-      views: {
-        'adopt-tab': {
-          templateUrl: 'templates/adopt.html'
-        }
-      }
-    })
-
-    .state('tab.about', {
-      url: '/about',
-      views: {
-        'about-tab': {
-          templateUrl: 'templates/about.html',
-          controller: 'PetDetailCtrl'
         }
       }
     });

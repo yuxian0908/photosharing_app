@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['ionic'])
 
-.controller('UserLoginCtrl', function($scope, $ionicPopup, PetService, $http) {
-    $scope.users =  PetService.getuser()||{};
+.controller('UserLoginCtrl', function($scope, $ionicPopup, loginService, $http, $window) {
+    $scope.users =  loginService.getuser()||{};
    
     
     // 登入
@@ -26,8 +26,7 @@ angular.module('starter.controllers', ['ionic'])
               if (!$scope.data.username||!$scope.data.password) {
                 // 不允许用户关闭，除非输入 wifi 密码
                 e.preventDefault();
-              } else {
-                window.location.assign('#/tab/user');
+              } else {       
                 return $scope.data;
               }
             }
@@ -46,7 +45,9 @@ angular.module('starter.controllers', ['ionic'])
           $http.post(' https://yuxian-photosharing.herokuapp.com/api/signin',users)
           .then(function (res){
             $scope.users.username = users.username;
-            var nowUser = PetService.login($scope.users); //將user存成全域物件
+            var nowUser = loginService.login($scope.users); //將user存成全域物件
+            window.location.assign('#/tab/user');
+            alert('登入成功');         
           },function (error){
             console.log('wrong');
             alert('帳號或密碼錯誤');
@@ -60,8 +61,14 @@ angular.module('starter.controllers', ['ionic'])
 
     // 註冊
     $scope.usersignup = function(){
-      console.log('test');
-      $scope.newuser = {}
+      $scope.newuser = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        role:["user"]
+      }
       // 登入彈出式視窗
       var myPopup = $ionicPopup.show({
         template: 'firstname:<input type="text" ng-model="newuser.firstname">'+
@@ -94,15 +101,24 @@ angular.module('starter.controllers', ['ionic'])
         ]
       });
       myPopup.then(function(newuser) {
-        console.log('Tapped!', newuser.username);
+        console.log('Tapped!', newuser);
+        
+        $http.post('https://yuxian-photosharing.herokuapp.com/api/signup',newuser).then(function (success){
+          alert('註冊成功');
+          window.location.assign('#/tab/signin');
+        },function (error){
+          console.log('wrong');
+          alert('註冊失敗');
+          location.reload();
+        });
       });
-    }
+    };
+
+    $scope.userIndex = {
+      init:function(){
+        $window.location.href = 'https://yuxian-photosharing.herokuapp.com/';
+      }
+    };
+
   }
-)
-
-
-// A simple controller that shows a tapped item's data
-.controller('PetDetailCtrl', function($scope, $stateParams, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pet = PetService.get($stateParams.petId);
-});
+);

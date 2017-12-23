@@ -23,47 +23,38 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       templateUrl: 'templates/tabs.html'
     })
 
-    // the pet tab has its own child nav-view and history
-    .state('tab.pet-index', {
-      url: '/pets',
+    .state('tab.user-login', {
+      url: '/login',
       views: {
-        'pets-tab': {
-          templateUrl: 'templates/pet-index.html',
-          controller: 'PetIndexCtrl'
+        'login-tab': {
+          templateUrl: 'templates/user-login.html',
+          controller: 'UserLoginCtrl'
         }
       }
     })
 
-    .state('tab.pet-detail', {
-      url: '/pet/:petId',
+    .state('tab.sign-up', {
+      url: '/signup',
       views: {
-        'pets-tab': {
-          templateUrl: 'templates/pet-detail.html',
-          controller: 'PetDetailCtrl'
+        'signup-tab': {
+          templateUrl: 'templates/sign-up.html',
+          controller: 'UserLoginCtrl'
         }
       }
     })
 
-    .state('tab.adopt', {
-      url: '/adopt',
+    .state('tab.user-index', {
+      url: '/user',
       views: {
-        'adopt-tab': {
-          templateUrl: 'templates/adopt.html'
-        }
-      }
-    })
-
-    .state('tab.about', {
-      url: '/about',
-      views: {
-        'about-tab': {
-          templateUrl: 'templates/about.html'
+        'user-tab': {
+          templateUrl: 'templates/User-index.html',
+          controller: 'UserLoginCtrl'
         }
       }
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/pets');
+  $urlRouterProvider.otherwise('/tab/login');
 
 });
 
